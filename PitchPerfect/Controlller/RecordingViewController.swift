@@ -21,15 +21,37 @@ class RecordingViewController: UIViewController {
         super.viewDidLoad()
         
         stopRecordingButton.isEnabled = false
+        addButtons()
+        setTheme(themeStyle)
+    }
+    
+    @objc
+    private func switchTheme(_ sender: Any) {
+        if themeStyle == .dark {
+            UserDefaults.standard.setThemeStyle(.light)
+            navigationItem.rightBarButtonItem?.image = UIImage.lightIcon
+        } else if themeStyle == .light {
+            UserDefaults.standard.setThemeStyle(.dark)
+            navigationItem.rightBarButtonItem?.image = UIImage.darkIcon
+        }
+        setTheme(themeStyle)
+    }
+    
+    @objc
+    private func showSaved(_ sender: Any) {
+        navigationController?.pushViewController(SavedTableViewController(), animated: true)
     }
     
     // MARK: - IBAction methods
     
-    @IBAction func startRecordingTapped(_ sender: UIButton) {
+    @IBAction
+    private func startRecordingTapped(_ sender: UIButton) {
         toggleRecording(true)
         
-        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)[0] as String
-        let recordingName = "recordedVoice.wav"
+        // TODO:
+        let dirPath = (Constants.Files.Directories.first!).absoluteString
+        // TODO: Date name
+        let recordingName = "\(Date().asName).\(Constants.Files.Extenstions.first!)"
         let pathArray = [dirPath, recordingName]
         let filePath = URL(string: pathArray.joined(separator: "/"))
         
@@ -43,13 +65,14 @@ class RecordingViewController: UIViewController {
         audioRecorder.record()
     }
     
-    @IBAction func stopRecordingTapped(_ sender: UIButton) {
+    @IBAction
+    private func stopRecordingTapped(_ sender: UIButton) {
         toggleRecording(false)
         audioRecorder.stop()
         try! AVAudioSession.sharedInstance().setActive(false)
     }
     
-    // MARK: - Helpers
+    // MARK: - Private setup functions
     
     private func toggleRecording(_ isOn: Bool) {
         recordingStateLabel.text = isOn ? "Recording in progress" : "Tap to start recording"
@@ -57,11 +80,23 @@ class RecordingViewController: UIViewController {
         startRecordingButton.isEnabled = !isOn
     }
     
-    // MARK: Prepare for segue
+    private func addButtons() {
+        var buttonImage: UIImage!
+        if themeStyle == .dark {
+            buttonImage = UIImage.darkIcon
+        } else {
+            buttonImage = UIImage.lightIcon
+        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: buttonImage, style: .plain, target: self, action: #selector(self.switchTheme(_:)))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Saved", style: .plain, target: self, action: #selector(self.showSaved(_:)))
+    }
+    
+    // MARK: - Prepare for segue
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "stopRecordingSegue", let vc = segue.destination as? PlaySoundsViewController {
             vc.recordedAudioURL = sender as? URL
+            vc.displayState = .savable
         }
     }
     
