@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+/// This is used to distinguish between first time recordings that is savable and previously saved files
 enum DisplayState { case savable, notSavable }
 
 class PlaySoundsViewController: UIViewController {
@@ -95,12 +96,10 @@ class PlaySoundsViewController: UIViewController {
     
     // MARK: - Private setup functions
     
+    /// Called in viewWillDisappear
     private func removeCurrentFile() {
-        do {
-            try FileManager.default.removeItem(at: recordedAudioURL)
-        } catch {
-            print("Couldn't delete file. \(error)")
-        }
+        // TODO: - Delete current file by passing `recordedAudioURL` to FileManager's `removeItem(at:)` function
+        
     }
     
     private func setupDisplayState() {

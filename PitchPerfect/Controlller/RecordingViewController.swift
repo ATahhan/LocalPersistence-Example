@@ -27,11 +27,12 @@ class RecordingViewController: UIViewController {
     
     @objc
     private func switchTheme(_ sender: Any) {
+        // TODO: - Use `setThemeStyle` function to update the style in each one of the conditions accordingly
         if themeStyle == .dark {
-            UserDefaults.standard.setThemeStyle(.light)
+            
             navigationItem.rightBarButtonItem?.image = UIImage.lightIcon
         } else if themeStyle == .light {
-            UserDefaults.standard.setThemeStyle(.dark)
+            
             navigationItem.rightBarButtonItem?.image = UIImage.darkIcon
         }
         setTheme(themeStyle)
@@ -48,10 +49,9 @@ class RecordingViewController: UIViewController {
     private func startRecordingTapped(_ sender: UIButton) {
         toggleRecording(true)
         
-        // TODO:
         let dirPath = (Constants.Files.Directories.first!).absoluteString
-        // TODO: Date name
-        let recordingName = "\(Date().asName).\(Constants.Files.Extenstions.first!)"
+        // TODO: - Change file name to something unique. Most common ways of uniquely naming files are by using Date or UUID.
+        let recordingName = "recordedVoice.wav"
         let pathArray = [dirPath, recordingName]
         let filePath = URL(string: pathArray.joined(separator: "/"))
         

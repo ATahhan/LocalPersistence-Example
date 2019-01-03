@@ -10,19 +10,11 @@ import Foundation
 
 extension UserDefaults {
     
-    func setThemeStyle(_ value: ThemeStyle) {
-        UserDefaults.standard.set(value.rawValue, forKey: Constants.UserDefaults.ThemeStyleIdentifier)
-    }
+    // TODO: - Create `setThemeStyle(_:)` function that takes a `ThemeStyle` as a parameter and saves it to UserDefaults
     
-    func themeStyle() -> ThemeStyle {
-        if let savedStyle = UserDefaults.standard.string(forKey: Constants.UserDefaults.ThemeStyleIdentifier),
-            let themeStyle = ThemeStyle(rawValue: savedStyle) {
-            return themeStyle
-        }
-        
-        // Default theme
-        return .light
-    }
+    
+    // TODO: - Create `themeStyle()` function that returns the currently saved style in UserDefaults, or a default style if non is saved
+    
     
 }
 
@@ -36,7 +28,6 @@ struct Constants {
     }
     
     struct UserDefaults {
-        /// UserDefaults Ids
         static let ThemeStyleIdentifier = "ThemeStyle"
     }
 }
