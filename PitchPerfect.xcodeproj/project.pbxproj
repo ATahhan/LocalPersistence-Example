@@ -101,8 +101,8 @@
 		D6367D8321D7CE11009EBFB6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D6367D8121D7CDDD009EBFB6 /* UserDefaults+Constants.swift */,
 				D6A05A0B21D5370B004E35BE /* Theme+Date.swift */,
+				D6367D8121D7CDDD009EBFB6 /* UserDefaults+Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
