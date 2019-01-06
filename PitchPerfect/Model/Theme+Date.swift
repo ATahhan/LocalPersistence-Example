@@ -16,6 +16,9 @@ enum ThemeStyle: String {
 extension UIViewController {
     
     // TODO : - Create a themeStyle computed variable to return the current saved value in UserDefaults
+    var themeStyle: ThemeStyle {
+        return UserDefaults.standard.themeStyle()
+    }
     
     func setTheme(_ themeStyle: ThemeStyle) {
         if themeStyle == .dark {

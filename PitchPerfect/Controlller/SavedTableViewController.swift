@@ -19,26 +19,31 @@ class SavedTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        navigationItem.rightBarButtonItem = editButtonItem
         navigationItem.title = "Saved Files"
+    }
+    
+    // MARK: - Private functions
+    
+    private func removeFile(at index: Int) -> Bool {
+        do {
+            try FileManager.default.removeItem(at: files[index])
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+        return true
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return files.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
@@ -63,6 +68,16 @@ class SavedTableViewController: UITableViewController {
         vc.recordedAudioURL = files[indexPath.row]
         vc.displayState = .notSavable
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            if removeFile(at: indexPath.row) {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            tableView.endUpdates()
+        }
     }
 
 }

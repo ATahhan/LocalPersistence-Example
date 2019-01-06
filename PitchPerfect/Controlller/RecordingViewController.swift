@@ -29,10 +29,10 @@ class RecordingViewController: UIViewController {
     private func switchTheme(_ sender: Any) {
         // TODO: - Use `setThemeStyle` function to update the style in each one of the conditions accordingly
         if themeStyle == .dark {
-            
+            UserDefaults.standard.setThemeStyle(.light)
             navigationItem.rightBarButtonItem?.image = UIImage.lightIcon
         } else if themeStyle == .light {
-            
+            UserDefaults.standard.setThemeStyle(.dark)
             navigationItem.rightBarButtonItem?.image = UIImage.darkIcon
         }
         setTheme(themeStyle)

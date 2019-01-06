@@ -99,7 +99,11 @@ class PlaySoundsViewController: UIViewController {
     /// Called in viewWillDisappear
     private func removeCurrentFile() {
         // TODO: - Delete current file by passing `recordedAudioURL` to FileManager's `removeItem(at:)` function
-        
+        do {
+            try FileManager.default.removeItem(at: recordedAudioURL)
+        } catch {
+            print("Couldn't delete file. \(error)")
+        }
     }
     
     private func setupDisplayState() {
