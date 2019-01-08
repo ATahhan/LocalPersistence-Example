@@ -51,7 +51,7 @@ class RecordingViewController: UIViewController {
         
         let dirPath = (Constants.Files.Directories.first!).absoluteString
         // TODO: - Change file name to something unique. Most common ways of uniquely naming files are by using Date or UUID.
-        let recordingName = "recordedVoice.wav"
+        let recordingName = "\(Date().asName).wav"
         let pathArray = [dirPath, recordingName]
         let filePath = URL(string: pathArray.joined(separator: "/"))
         
